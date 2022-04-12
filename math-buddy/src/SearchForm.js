@@ -1,12 +1,22 @@
-import { Upload, message, Card } from "antd";
+import { Form, Button, Upload, message, Card } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 
 const { Dragger } = Upload;
 
+const finish = (values) => {
+  console.log("In finish");
+  fetch("upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(values),
+  }).then((response) => console.log(response));
+};
+
 const props = {
   name: "file",
-  multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+  customRequest: (stuff) => finish(stuff),
+  // multiple: true,
+  // // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
   onChange(info) {
     const { status } = info.file;
     if (status !== "uploading") {
@@ -18,9 +28,9 @@ const props = {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
-  },
+  // onDrop(e) {
+  //   console.log("Dropped files", e.dataTransfer.files);
+  // },
 };
 
 const SearchForm = () => {
