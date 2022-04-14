@@ -1,19 +1,28 @@
+import os
+
 # PDM
-from flask import Flask, send_file, request
+from flask import Flask, send_file, request, jsonify
 
 app = Flask(__name__)
 
+
 @app.route("/upload", methods=["POST"])
 def upload():
-    print(request)
-    return "debug"
     if request.method == "POST":
         f = request.files["file"]
         if f.filename:
-            f.save(f.filename)
-            print(f.read())
-        return "file uploaded successfully"
-    return "file upload failed"
+            f.save(os.path.join("./uploaded_files", f.filename))
+    return "{}"
+
+
+# @app.route("/remove", methods=["POST"])
+# def remove():
+#     if request.method == "POST":
+#         f = request.files["file"]
+#         if f.filename:
+#             os.remove(os.path.join("./uploaded_files", f.filename))
+#             return f.filename
+#     return ""
 
 
 @app.route("/favicon.ico")
