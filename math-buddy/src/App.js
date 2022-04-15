@@ -20,8 +20,8 @@ function App() {
             style={{ padding: "0 24px", minHeight: 280, height: "100%" }}
           >
             <Row>
-              <Col xs={24} xl={8}></Col>
-              <Col xs={24} xl={8}>
+              <Col xs={24} xl={6}></Col>
+              <Col xs={24} xl={12}>
                 <SearchForm />
               </Col>
               <Col xs={24} xl={8}></Col>
