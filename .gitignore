@@ -17,13 +17,16 @@
 .env.development.local
 .env.test.local
 .env.production.local
+__pypackages__/
+__pycache__/
+
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# mac
-.DS_Store
+# ipynb
+.ipynb_checkpoints/
 
 # train/test data
 Data/
