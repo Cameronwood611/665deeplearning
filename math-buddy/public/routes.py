@@ -11,10 +11,25 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
 bp = Blueprint("routes", __name__)
 
+
+def make_bitmap(img: np.ndarray):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    filter = cv2.getGaussianKernel(31, 11)
+    filter = filter * filter.T
+    smoothed_im = cv2.filter2D(img, 0, filter)
+    _, img = cv2.threshold(smoothed_im, 115, 255, cv2.THRESH_BINARY)
+    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    return img
+
 def get_yt(type: str):
     videos = {
         "matrix": "https://www.youtube.com/embed/0oGJTQCy4cQ",
-        "sqrt": "https://www.youtube.com/embed/mbc3_e5lWw0"
+        "sqrt": "https://www.youtube.com/embed/mbc3_e5lWw0",
+        "ineq": "https://www.youtube.com/embed/VgDe_D8ojxw",
+        "series": "https://www.youtube.com/embed/_cooC3yG_p0",
+        "distribute": "https://www.youtube.com/embed/3NHSwiv_pSE",
+        "limit": "https://www.youtube.com/embed/riXcZT2ICjA",
+        "integral": "https://www.youtube.com/embed/__Uw1SXPW7s"
     }
     return videos[type]
 
@@ -46,6 +61,7 @@ def get_image(filename):
 
 def predict(file: str):
     im = cv2.imread(file)
+    im = make_bitmap(im)
     im = resize_img(im, (224, 224))
     model = load_model("../saved_models/model_hinge.h5")
     types = ['distribute', 'ineq', 'integral', 'limit', 'matrix', 'series', 'sqrt']
@@ -57,6 +73,7 @@ def predict(file: str):
     image_batch = resnet50.preprocess_input(image_batch)
     feature_input = resnet_mse_model.predict(image_batch)
     predictions = model.predict(feature_input)
+    print(predictions)
     pos = np.argmax(predictions)
     pred = types[pos]
     return pred
@@ -65,7 +82,6 @@ def predict(file: str):
 
 @bp.route("/upload", methods=["POST"])
 def upload():
-    print("yeet")
     if request.method == "POST":
         f = request.files["file"]
         if f.filename:
@@ -76,16 +92,6 @@ def upload():
             return get_yt(math_type)
 
     return "{}"
-
-
-# @app.route("/remove", methods=["POST"])
-# def remove():
-#     if request.method == "POST":
-#         f = request.files["file"]
-#         if f.filename:
-#             os.remove(os.path.join("./uploaded_files", f.filename))
-#             return f.filename
-#     return ""
 
 
 @bp.route("/favicon.ico")
