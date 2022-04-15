@@ -13,7 +13,8 @@ bp = Blueprint("routes", __name__)
 
 def get_yt(type: str):
     videos = {
-        "matrix": "https://www.youtube.com/embed/0oGJTQCy4cQ"
+        "matrix": "https://www.youtube.com/embed/0oGJTQCy4cQ",
+        "sqrt": "https://www.youtube.com/embed/mbc3_e5lWw0"
     }
     return videos[type]
 
