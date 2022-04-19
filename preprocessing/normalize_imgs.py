@@ -6,6 +6,16 @@ import cv2
 import numpy as np
 
 
+def make_bitmap(img: np.ndarray):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    filter = cv2.getGaussianKernel(31, 11)
+    filter = filter * filter.T
+    smoothed_im = cv2.filter2D(img, 0, filter)
+    _, img = cv2.threshold(smoothed_im, 115, 255, cv2.THRESH_BINARY)
+    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    return img
+
+
 def resize_img(im: np.ndarray, dim: tuple):
     y, x = im.shape[0], im.shape[1]
     y_out, x_out = dim
