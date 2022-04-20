@@ -26,7 +26,7 @@ def get_yt(type: str):
         "matrix": "https://www.youtube.com/embed/0oGJTQCy4cQ",
         "sqrt": "https://www.youtube.com/embed/mbc3_e5lWw0",
         "ineq": "https://www.youtube.com/embed/VgDe_D8ojxw",
-        "series": "https://www.youtube.com/embed/_cooC3yG_p0",
+        "series": "https://www.youtube.com/embed/m5Yn4BdpOV0",
         "distribute": "https://www.youtube.com/embed/3NHSwiv_pSE",
         "limit": "https://www.youtube.com/embed/riXcZT2ICjA",
         "integral": "https://www.youtube.com/embed/__Uw1SXPW7s"
